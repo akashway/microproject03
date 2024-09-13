@@ -41,12 +41,12 @@ for (let i = 0; i <= allButton.length; i++) {
                 return
             }
             else {
-                // try{
+                try{
                     result = eval(input.value)  
-                // }
-                // catch(error){
-                //     alert("Invalid expression")
-                // }
+                }
+                catch(error){
+                    alert("Invalid expression")
+                }
 
                 console.log(eval);
 
