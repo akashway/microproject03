@@ -1,7 +1,6 @@
 const allButton = document.querySelectorAll(".numeric-area>button")
 const input = document.getElementsByTagName('input')[0]
 
-console.log(input)
 let calculationString = []
 
 for (let i = 0; i <= allButton.length; i++) {
@@ -10,25 +9,26 @@ for (let i = 0; i <= allButton.length; i++) {
         let values = allButton[i].textContent
         if (values !== "=" && values !== "DEL") {
             calculationString.push(values)
-            if(calculationString[0]==="*" || calculationString[0]==="/" || calculationString[0]==="+" ){
+            if (calculationString[0] === "*" || calculationString[0] === "/" || calculationString[0] === "+") {
                 alert("Invalid Expression!")
                 calculationString.pop()
             }
-            for(let j=0;j<calculationString.length;j++){
-                if(calculationString.length<=1){
+            for (let j = 0; j < calculationString.length; j++) {
+                if (calculationString.length <= 1) {
                     break;
                 }
-                else{
-                    if((calculationString[j-1]==="*" || calculationString[j-1]==="/" || calculationString[j-1]==="+" || calculationString[j-1]==="-" || calculationString[j-1]==="." ) && (calculationString[j]==="*" || calculationString[j]==="/" || calculationString[j]==="+" || calculationString[j]==="-" )){
+                else {
+                    if ((calculationString[j-1] === "*" || calculationString[j-1] === "/" || calculationString[j - 1] === "+" || calculationString[j - 1] === "-") && (calculationString[j] === "*" || calculationString[j] === "/" || calculationString[j] === "+" || calculationString[j] === "-")) {
                         alert("Inavlid expression!")
                         calculationString.pop()
                     }
-                    if(calculationString[j-1]==="." && calculationString[j]==="."){
+                    if (calculationString[j - 1] === "." && calculationString[j] === ".") {
                         alert("Inavlid expression!")
                         calculationString.pop()
                     }
                 }
             }
+            
             input.value = calculationString.join("")
         }
         if (values === "=") {
@@ -36,12 +36,30 @@ for (let i = 0; i <= allButton.length; i++) {
                 alert("Enter expression!")
                 return
             }
-            else {
-                result = eval(input.value)
-                input.value = result
-                calculationString=[]
-                calculationString.push(result)
+            else if (values === "=" && (calculationString[calculationString.length-1]==="*" || calculationString[calculationString.length-1]==="+" || calculationString[calculationString.length-1]==="-" || calculationString[calculationString.length-1]==="/")) {
+                alert("Invalid expression!")
+                return
             }
+            else {
+                // try{
+                    result = eval(input.value)  
+                // }
+                // catch(error){
+                //     alert("Invalid expression")
+                // }
+
+                console.log(eval);
+
+                if(result%1===0){
+                    input.value = result
+                }
+                if(result%1!==0){
+                    input.value = result.toFixed(3)
+                }
+                calculationString = []
+                calculationString.push(input.value)
+            }
+
         }
 
         if (values === "RESET") {
@@ -52,7 +70,5 @@ for (let i = 0; i <= allButton.length; i++) {
             calculationString.pop()
             input.value = calculationString.join("")
         }
-        console.log("input.value", input.value);
-        console.log("calculationString", calculationString);
     })
 }
